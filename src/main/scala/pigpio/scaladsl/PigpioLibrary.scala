@@ -902,43 +902,43 @@ object PigpioLibrary {
   val PI_DEFAULT_CFG_INTERNALS: Int = 0
 
   trait gpioAlertFunc_t extends Callback {
-    def apply(gpio: Int, level: Int, tick: Int)
+    def callback(gpio: Int, level: Int, tick: Int)
   }
 
   trait gpioAlertFuncEx_t extends Callback {
-    def apply(gpio: Int, level: Int, tick: Int, userdata: Pointer)
+    def callback(gpio: Int, level: Int, tick: Int, userdata: Pointer)
   }
 
   trait gpioISRFunc_t extends Callback {
-    def apply(gpio: Int, level: Int, tick: Int)
+    def callback(gpio: Int, level: Int, tick: Int)
   }
 
   trait gpioISRFuncEx_t extends Callback {
-    def apply(gpio: Int, level: Int, tick: Int, userdata: Pointer)
+    def callback(gpio: Int, level: Int, tick: Int, userdata: Pointer)
   }
 
   trait gpioTimerFunc_t extends Callback {
-    def apply()
+    def callback()
   }
 
   trait gpioTimerFuncEx_t extends Callback {
-    def apply(userdata: Pointer)
+    def callback(userdata: Pointer)
   }
 
   trait gpioSignalFunc_t extends Callback {
-    def apply(signum: Int)
+    def callback(signum: Int)
   }
 
   trait gpioSignalFuncEx_t extends Callback {
-    def apply(signum: Int, userdata: Pointer)
+    def callback(signum: Int, userdata: Pointer)
   }
 
   trait gpioGetSamplesFunc_t extends Callback {
-    def apply(samples: gpioSample_t, numSamples: Int)
+    def callback(samples: gpioSample_t, numSamples: Int)
   }
 
   trait gpioGetSamplesFuncEx_t extends Callback {
-    def apply(samples: gpioSample_t, numSamples: Int, userdata: Pointer)
+    def callback(samples: gpioSample_t, numSamples: Int, userdata: Pointer)
   }
 
   class gpioThreadFunc_t(address: Pointer) extends PointerType(address)
