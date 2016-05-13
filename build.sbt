@@ -9,10 +9,12 @@ scalacOptions += "-target:jvm-1.8"
 resolvers += "jw3 at bintray" at "https://dl.bintray.com/jw3/maven"
 
 libraryDependencies ++= {
+  val akkaVersion = "2.4.4"
   val scalatestVersion = "3.0.0-M15"
 
   Seq(
     "com.github.jw3" % "pigpio-jna" % "0.3",
+    "com.typesafe.akka" %% "akka-actor" % akkaVersion,
 
     "org.scalactic" %% "scalactic" % scalatestVersion % Test,
     "org.scalatest" %% "scalatest" % scalatestVersion % Test
