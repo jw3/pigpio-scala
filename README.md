@@ -3,6 +3,18 @@ Scala pigpio
 [![Build Status](https://travis-ci.org/jw3/pigpio-scala.svg?branch=master)](https://travis-ci.org/jw3/pigpio-scala)
 [![Dependencies](https://app.updateimpact.com/badge/701268856357916672/pigpio-scala.svg?config=compile)](https://app.updateimpact.com/latest/701268856357916672/pigpio-scala)
 
+##### Ticks
+
+Ticks come across as unsigned integers in
+
+* `gpioAlertFunc_t`
+* `gpioAlertFuncEx_t`
+* `gpioISRFunc_t`
+* `gpioISRFuncEx_t`
+
+Use `Ticks` to convert to a Long
+
+
 ##### Artifacts
 
 Add the bintray resolver to you sbt project
