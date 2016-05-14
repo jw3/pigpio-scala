@@ -1,6 +1,6 @@
 organization := "com.github.jw3"
 name := "pigpio-scala"
-version := "0.1"
+version := "0.1-SNAPSHOT"
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 scalaVersion := "2.11.8"
