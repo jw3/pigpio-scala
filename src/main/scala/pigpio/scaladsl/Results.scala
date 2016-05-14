@@ -33,8 +33,10 @@ object GpioResult {
     case pigpio.PI_BAD_PUD => throw BadPull()
     case _ => throw UnknownFailure()
   }
+}
 
-  def of(f: => Int): Try[GpioResult] = {
+object GpioResultOf {
+  def apply(f: => Int): Try[GpioResult] = {
     try Success(GpioResult(f))
     catch {
       case NonFatal(e) => Failure(e)
