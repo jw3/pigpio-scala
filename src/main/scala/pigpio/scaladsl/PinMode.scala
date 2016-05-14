@@ -6,6 +6,7 @@ sealed trait PinMode {
   def value: Int
 }
 
+case object ClearPin extends PinMode {val value = lib.PI_CLEAR}
 case object InputPin extends PinMode {val value = lib.PI_INPUT}
 case object OutputPin extends PinMode {val value = lib.PI_OUTPUT}
 

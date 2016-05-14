@@ -1,5 +1,7 @@
 package pigpio.scaladsl
 
+import akka.actor.ActorRef
+import pigpio.scaladsl.PigpioLibrary.gpioAlertFunc_t
 import pigpio.scaladsl.{PigpioLibrary => lib}
 
 /**
@@ -72,5 +74,16 @@ object GpioAlert {
       lazy val level = Level(gpio_level)
       lazy val tick = Ticks.asUint(microtick)
     }
+  }
+}
+
+object GpioAlertFunc {
+  // pigpio-docs: The alert may be cancelled by passing NULL as the function.
+  val clear: GpioAlertFunc = null.asInstanceOf[GpioAlertFunc]
+}
+
+class GpioAlertFunc(ref: ActorRef) extends gpioAlertFunc_t {
+  def callback(gpio: Int, level: Int, tick: Int /*UINT32*/): Unit = {
+    ref ! GpioAlert(gpio, level, tick)
   }
 }
