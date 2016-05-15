@@ -4,6 +4,8 @@ import akka.actor.{Actor, ActorLogging, Props}
 import pigpio.scaladsl.GpioPin.ListeningMessage
 import pigpio.scaladsl.PigpioLibrary.{INSTANCE => pigpio}
 
+import scala.util.{Success, Failure}
+
 
 object GpioPin {
   sealed trait ListeningMessage
@@ -46,8 +48,19 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
     {
       case ClearPin => context.become(off)
 
-      case l: Level => DefaultDigitalIO.gpioWrite(gpio, l)
-      case p: GpioPull => DefaultDigitalIO.gpioSetPullUpDown(gpio, p)
+      case l: Level =>
+        val src = sender()
+        DefaultDigitalIO.gpioWrite(gpio, l) match {
+          case Success(r) => src ! r
+          case Failure(e) => throw e
+        }
+
+      case p: GpioPull =>
+        val src = sender()
+        DefaultDigitalIO.gpioSetPullUpDown(gpio, p) match {
+          case Success(r) => src ! r
+          case Failure(e) => throw e
+        }
     }
   }
 
