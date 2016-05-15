@@ -1,25 +1,27 @@
 package pigpio.scaladsl
 
-import akka.actor.{Actor, Props}
-import pigpio.scaladsl.{PigpioLibrary => lib}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
+import pigpio.scaladsl.GpioPin.{Listen, Unlisten}
+
+import scala.collection.immutable.HashSet
 
 
 object GpioBus {
-  case class ListenOn(gpio: UserGpio)
-
-  def props()(implicit lgpio: PigpioLibrary) = Props(new GpioBus())
+  def props() = Props(new GpioBus())
 }
 
 
-class GpioBus()(implicit lgpio: PigpioLibrary) extends Actor {
-  import GpioBus._
-
-  val rxpins = (0 to lib.PI_MAX_USER_GPIO)
-               .map(UserGpio)
-               .map(gpio => gpio -> context.actorOf(GpioPin.props(gpio)))
-               .toMap
+class GpioBus() extends Actor with ActorLogging {
+  var listeners = HashSet[ActorRef]()
 
   def receive: Receive = {
-    case ListenOn(gpio) =>
+    case Listen =>
+      listeners += sender()
+
+    case Unlisten =>
+      listeners -= sender()
+
+    case a: GpioAlert =>
+      listeners.foreach(_ ! a)
   }
 }
