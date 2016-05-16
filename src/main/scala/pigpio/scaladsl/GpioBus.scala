@@ -15,10 +15,10 @@ class GpioBus() extends Actor with ActorLogging {
   var listeners = HashSet[ActorRef]()
 
   def receive: Receive = {
-    case Listen =>
+    case Listen() =>
       listeners += sender()
 
-    case Unlisten =>
+    case Unlisten() =>
       listeners -= sender()
 
     case a: GpioAlert =>

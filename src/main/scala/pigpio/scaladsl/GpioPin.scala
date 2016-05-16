@@ -27,6 +27,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
     {
       case InputPin => context.become(input)
       case OutputPin => context.become(output)
+      case QueryPinMode => sender() ! ClearPin
       case m: ListeningMessage => alertbus forward m
     }
   }
@@ -36,6 +37,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
     pigpio.gpioSetAlertFunc(gpio.value, listener)
 
     {
+      case QueryPinMode => sender() ! InputPin
       case ClearPin =>
         pigpio.gpioSetAlertFunc(gpio.value, GpioAlertFunc.clear)
         context.become(off)
@@ -46,6 +48,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
     log.debug("gpio[{}] in output state")
 
     {
+      case QueryPinMode => sender() ! OutputPin
       case ClearPin => context.become(off)
 
       case l: Level =>
