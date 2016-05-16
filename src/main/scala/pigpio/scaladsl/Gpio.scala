@@ -72,7 +72,7 @@ object GpioAlert {
     new GpioAlert {
       lazy val gpio = UserGpio(user_gpio)
       lazy val level = Level(gpio_level)
-      lazy val tick = Ticks.asUint(microtick)
+      lazy val tick = Integer.toUnsignedLong(microtick)
     }
   }
 }

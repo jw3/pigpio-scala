@@ -1,18 +1,22 @@
-Scala pigpio
+Scala [pigpio](https://github.com/joan2937/pigpio)
 ---
 [![Build Status](https://travis-ci.org/jw3/pigpio-scala.svg?branch=master)](https://travis-ci.org/jw3/pigpio-scala)
 [![Dependencies](https://app.updateimpact.com/badge/701268856357916672/pigpio-scala.svg?config=compile)](https://app.updateimpact.com/latest/701268856357916672/pigpio-scala)
 
+Scala API to the great pigpio library
+ 
+Using JNA bindings from [pigpio-jna](https://github.com/jw3/pigpio-jna)
+
 ##### Ticks
 
-Ticks come across as unsigned integers in
+Microsecond timestamps comes across as uint32 in
 
 * `gpioAlertFunc_t`
 * `gpioAlertFuncEx_t`
 * `gpioISRFunc_t`
 * `gpioISRFuncEx_t`
 
-Use `Ticks` to convert to a Long
+Using `Integer.parseUnsignedInt` to convert to a Long
 
 
 ##### Artifacts
