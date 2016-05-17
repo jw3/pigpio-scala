@@ -1,12 +1,10 @@
 package pigpio.scaladsl
 
-import akka.actor.{Actor, ActorSystem}
-import akka.testkit.{TestProbe, TestActor, TestActorRef, TestKit}
+import akka.actor.ActorSystem
+import akka.testkit.{TestActorRef, TestKit, TestProbe}
 import org.scalamock.scalatest.MockFactory
-import org.scalatest.enablers.Collecting
 import org.scalatest.{Matchers, WordSpecLike}
-import pigpio.scaladsl.GpioPin.{Unlisten, Listen}
-import Collecting._
+import pigpio.scaladsl.GpioPin.{Listen, Unlisten}
 
 class GpioBusSpec extends TestKit(ActorSystem()) with WordSpecLike with Matchers with MockFactory {
   val a1 = TestProbe()
