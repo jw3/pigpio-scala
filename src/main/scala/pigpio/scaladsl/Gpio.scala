@@ -54,11 +54,10 @@ object Gpio {
     require(extPins.contains(num), "out of range")
     ExtGpio(num)
   }
+}
 
-
-  object Implicits {
-    implicit def int2gpio(int: Int): UserGpio = Gpio(int)
-  }
+object GpioImplicits {
+  implicit def int2gpio(int: Int): UserGpio = Gpio(int)
 }
 
 sealed trait GpioAlert {

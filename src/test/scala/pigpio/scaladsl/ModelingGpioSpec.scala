@@ -14,7 +14,7 @@ class ModelingGpioSpec extends WordSpec with Matchers {
 
   "gpio implicits" should {
     "convert an in-range int to gpio" in {
-      import Gpio.Implicits._
+      import GpioImplicits._
       def fn(gpio: Gpio) = gpio
       fn(1) shouldBe Gpio(1)
     }

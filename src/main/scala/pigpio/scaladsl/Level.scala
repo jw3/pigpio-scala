@@ -16,10 +16,10 @@ object Level {
     case 1 => High
     case _ => throw BadLevel()
   }
+}
 
-  object Implicits {
-    implicit def bool2level(b: Boolean): Level = Level(b)
-  }
+object LevelImplicits {
+  implicit def bool2level(b: Boolean): Level = Level(b)
 }
 
 object Levels {
