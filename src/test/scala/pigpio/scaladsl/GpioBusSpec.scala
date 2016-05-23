@@ -5,6 +5,8 @@ import akka.testkit.{TestActorRef, TestKit, TestProbe}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpecLike}
 import pigpio.scaladsl.GpioPin.{Listen, Unlisten}
+import scala.concurrent.duration.DurationInt
+
 
 class GpioBusSpec extends TestKit(ActorSystem()) with WordSpecLike with Matchers with MockFactory {
   val a1 = TestProbe()
@@ -59,6 +61,19 @@ class GpioBusSpec extends TestKit(ActorSystem()) with WordSpecLike with Matchers
       bus ! alert
       a1.expectMsg(alert)
       a2.expectMsg(alert)
+    }
+  }
+
+  "forwarding from alert function" should {
+    "send callbacks" in {
+      val bus = TestProbe()
+
+      val func = new GpioAlertFunc(bus.ref)
+      func.callback(0, 0, 0)
+
+      bus.expectMsgPF(5.seconds) {
+        case a: GpioAlert =>
+      }
     }
   }
 }
