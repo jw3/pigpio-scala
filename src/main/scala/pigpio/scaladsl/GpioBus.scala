@@ -1,12 +1,13 @@
 package pigpio.scaladsl
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Props}
+import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
 import pigpio.scaladsl.GpioPin.{Listen, Unlisten}
 
 import scala.collection.immutable.HashSet
 
 
 object GpioBus {
+  def apply()(implicit sys: ActorSystem) = sys.actorOf(props())
   def props() = Props(new GpioBus())
 }
 

@@ -1,6 +1,6 @@
 package pigpio.scaladsl
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import pigpio.scaladsl.GpioPin.ListeningMessage
 import pigpio.scaladsl.PigpioLibrary.{INSTANCE => pigpio}
 
@@ -12,6 +12,7 @@ object GpioPin {
   case class Listen() extends ListeningMessage
   case class Unlisten() extends ListeningMessage
 
+  def apply(gpio: UserGpio)(implicit lgpio: PigpioLibrary, sys: ActorSystem) = sys.actorOf(props(gpio))
   def props(gpio: UserGpio)(implicit lgpio: PigpioLibrary) = Props(new GpioPin(gpio))
 }
 
