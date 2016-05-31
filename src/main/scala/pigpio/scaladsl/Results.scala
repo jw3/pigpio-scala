@@ -11,11 +11,23 @@ sealed trait GpioFailure extends RuntimeException with GpioResult
 sealed trait GpioOk extends GpioResult
 case class OK() extends GpioOk
 
-case class UnknownFailure() extends GpioFailure
+sealed trait InitResult
+case class Init private[scaladsl](lgpio: PigpioLibrary, ver: Int) extends InitResult
+case object InitFailed extends RuntimeException with InitResult
+case object UnknownInitFailure extends RuntimeException with InitResult
+
+object InitResult {
+  def apply(code: Int) = code match {
+    case PigpioLibrary.PI_INIT_FAILED => throw InitFailed
+    case ver: Int => Init(PigpioLibrary.INSTANCE, ver)
+  }
+}
 
 /**
  * [[Gpio]] failures
  */
+case class UnknownFailure() extends GpioFailure
+
 sealed trait BadGpio extends GpioFailure
 case class BadUserGpio() extends BadGpio
 case class BadExGpio() extends BadGpio

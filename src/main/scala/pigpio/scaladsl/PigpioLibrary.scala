@@ -949,7 +949,7 @@ object PigpioLibrary {
 
 trait PigpioLibrary extends Library {
 
-  def gpioInitialise: Int
+  def gpioInitialise(): Int
 
   def gpioTerminate()
 
