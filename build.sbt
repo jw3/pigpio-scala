@@ -16,6 +16,9 @@ libraryDependencies ++= {
     "com.github.jw3" % "pigpio-jna" % "0.3",
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
 
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
+    "com.typesafe.akka" %% "akka-slf4j" % akkaVersion % Runtime,
+
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
     "org.scalactic" %% "scalactic" % scalatestVersion % Test,
     "org.scalatest" %% "scalatest" % scalatestVersion % Test,

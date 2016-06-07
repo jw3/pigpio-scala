@@ -18,12 +18,12 @@ object GpioPin {
 
 
 class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with ActorLogging {
-  log.debug("created actor for gpio[{}]", gpio.value.toString)
+  log.debug("created [{}] actor", gpio)
   val alertbus = context.actorOf(GpioBus.props())
   val listener = new GpioAlertFunc(alertbus)
 
   def off: Receive = {
-    log.debug("gpio[{}] in off state")
+    log.debug("[{}] in off state", gpio)
 
     {
       case InputPin => context.become(input)
@@ -34,7 +34,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
   }
 
   def input: Receive = {
-    log.debug("gpio[{}] in input state")
+    log.debug("[{}] in input state", gpio)
     pigpio.gpioSetAlertFunc(gpio.value, listener)
 
     {
@@ -46,13 +46,14 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
   }
 
   def output: Receive = {
-    log.debug("gpio[{}] in output state")
+    log.debug("[{}] in output state", gpio)
 
     {
       case QueryPinMode => sender() ! OutputPin
       case ClearPin => context.become(off)
 
       case l: Level =>
+        log.debug("[{}] writing [{}]", gpio, l)
         val src = sender()
         DefaultDigitalIO.gpioWrite(gpio, l) match {
           case Success(r) => src ! r
@@ -60,6 +61,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
         }
 
       case p: GpioPull =>
+        log.debug("[{}] pulling [{}]", gpio, p)
         val src = sender()
         DefaultDigitalIO.gpioSetPullUpDown(gpio, p) match {
           case Success(r) => src ! r
