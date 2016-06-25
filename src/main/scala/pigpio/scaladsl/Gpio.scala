@@ -74,6 +74,7 @@ object GpioAlert {
       lazy val tick = Integer.toUnsignedLong(microtick)
     }
   }
+  def unapply(arg: GpioAlert): Option[(UserGpio, Level, Long)] = Option((arg.gpio, arg.level, arg.tick))
 }
 
 object GpioAlertFunc {
