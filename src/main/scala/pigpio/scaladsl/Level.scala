@@ -16,6 +16,11 @@ object Level {
     case 1 => High
     case _ => throw BadLevel()
   }
+
+  def flip(l: Level) = l match {
+    case High => Low
+    case Low => High
+  }
 }
 
 object LevelImplicits {
