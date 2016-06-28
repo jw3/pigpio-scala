@@ -1,7 +1,7 @@
 package pigpio.scaladsl
 
 
-trait Level {
+sealed trait Level {
   def value: Int
   def toBoolean: Boolean = value != 0
 }
