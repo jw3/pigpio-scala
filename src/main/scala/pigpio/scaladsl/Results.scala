@@ -36,6 +36,12 @@ case class BadMode() extends GpioFailure
 case class BadPull() extends GpioFailure
 case class BadLevel() extends GpioFailure
 
+case class BadBaudRate() extends GpioFailure
+
+sealed trait SerialReadResult
+case class ReadOK(value: Int) extends SerialReadResult
+case class UnknownReadFailure(value: Int) extends RuntimeException with SerialReadResult
+
 object GpioResult {
   def apply(code: Int): GpioResult = code match {
     case 0 => OK()
@@ -43,6 +49,7 @@ object GpioResult {
     case pigpio.PI_BAD_GPIO => throw BadExGpio()
     case pigpio.PI_BAD_MODE => throw BadMode()
     case pigpio.PI_BAD_PUD => throw BadPull()
+    case pigpio.PI_BAD_WAVE_BAUD => throw BadBaudRate()
     case _ => throw UnknownFailure()
   }
 }
