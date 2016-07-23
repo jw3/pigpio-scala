@@ -1,6 +1,6 @@
 package pigpio.scaladsl
 
-import pigpio.scaladsl.{PigpioLibrary => lib}
+import rxgpio.pigpio.{PigpioLibrary => lib}
 
 sealed trait GpioPull {
   def value: Int

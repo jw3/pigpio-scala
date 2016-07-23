@@ -1,8 +1,8 @@
 package pigpio.scaladsl
 
 import akka.actor.ActorRef
-import pigpio.scaladsl.PigpioLibrary.gpioAlertFunc_t
-import pigpio.scaladsl.{PigpioLibrary => lib}
+import rxgpio.pigpio.PigpioLibrary.gpioAlertFunc_t
+import rxgpio.pigpio.{PigpioLibrary => lib}
 
 /**
  * GPIO

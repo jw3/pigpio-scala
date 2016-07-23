@@ -1,6 +1,7 @@
 package pigpio.scaladsl
 
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{Matchers, WordSpec}
+import rxgpio.pigpio.PigpioLibrary
 
 class LazyInitSpec extends WordSpec with Matchers {
   "library" should {
@@ -9,7 +10,7 @@ class LazyInitSpec extends WordSpec with Matchers {
     }
     "load explicitly" in {
       intercept[UnsatisfiedLinkError] {
-        PigpioLibrary.INSTANCE.gpioWaveTxStop
+        PigpioLibrary.Instance.gpioWaveTxStop
       }
     }
   }

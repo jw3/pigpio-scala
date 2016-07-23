@@ -2,6 +2,7 @@ package pigpio.scaladsl
 
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
+import rxgpio.pigpio.PigpioLibrary
 
 import scala.util.{Failure, Success}
 

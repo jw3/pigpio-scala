@@ -21,7 +21,7 @@ trait Initializer {
 }
 
 object DefaultInitializer extends Initializer {
-  private val pigpio = PigpioLibrary.INSTANCE
+  private val pigpio = rxgpio.pigpio.PigpioLibrary.Instance
 
   def gpioInitialise(): Try[Init] = {
     try Success(InitResult(pigpio.gpioInitialise()))

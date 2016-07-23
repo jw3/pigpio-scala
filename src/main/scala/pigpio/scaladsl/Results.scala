@@ -1,6 +1,7 @@
 package pigpio.scaladsl
 
-import pigpio.scaladsl.{PigpioLibrary => pigpio}
+import rxgpio.pigpio.PigpioLibrary
+import rxgpio.pigpio.{PigpioLibrary => pigpio}
 
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
@@ -12,14 +13,14 @@ sealed trait GpioOk extends GpioResult
 case class OK() extends GpioOk
 
 sealed trait InitResult
-case class Init private[scaladsl](lgpio: PigpioLibrary, ver: Int) extends InitResult
+case class Init private[scaladsl](lgpio: pigpio, ver: Int) extends InitResult
 case object InitFailed extends RuntimeException with InitResult
 case object UnknownInitFailure extends RuntimeException with InitResult
 
 object InitResult {
   def apply(code: Int) = code match {
     case PigpioLibrary.PI_INIT_FAILED => throw InitFailed
-    case ver: Int => Init(PigpioLibrary.INSTANCE, ver)
+    case ver: Int => Init(PigpioLibrary.Instance, ver)
   }
 }
 

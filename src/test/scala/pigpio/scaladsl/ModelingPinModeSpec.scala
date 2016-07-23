@@ -1,7 +1,7 @@
 package pigpio.scaladsl
 
 import org.scalatest.{Matchers, WordSpecLike}
-import pigpio.scaladsl.{PigpioLibrary => lib}
+import rxgpio.pigpio.{PigpioLibrary => lib}
 
 
 /**

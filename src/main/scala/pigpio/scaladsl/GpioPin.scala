@@ -2,9 +2,10 @@ package pigpio.scaladsl
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import pigpio.scaladsl.GpioPin.ListeningMessage
-import pigpio.scaladsl.PigpioLibrary.{INSTANCE => pigpio}
+import rxgpio.pigpio.PigpioLibrary.{Instance => pigpio}
+import rxgpio.pigpio.PigpioLibrary
 
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 
 object GpioPin {

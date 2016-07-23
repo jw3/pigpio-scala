@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, TestKit}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpecLike}
+import rxgpio.pigpio.PigpioLibrary
 
 
 class GpioPinSpec extends TestKit(ActorSystem()) with WordSpecLike with Matchers with MockFactory {

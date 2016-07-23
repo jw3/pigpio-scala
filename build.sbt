@@ -1,6 +1,6 @@
 organization := "com.github.jw3"
 name := "pigpio-scala"
-version := "0.1.40-SNAPSHOT"
+version := "1.1.40-SNAPSHOT"
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 scalaVersion := "2.11.8"
@@ -13,7 +13,7 @@ libraryDependencies ++= {
   val scalatestVersion = "3.0.0-M15"
 
   Seq(
-    "com.github.jw3" % "pigpio-jna" % "0.40.0",
+    "com.rxthings" %% "rxgpio-pigpio" % "0.0.1-44fc295f66d473b84faca9cc6e59f0f9e5f6af8a-SNAPSHOT",
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
 
     "net.java.dev.jna" % "jna" % "4.2.1",
