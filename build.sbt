@@ -9,8 +9,8 @@ scalacOptions += "-target:jvm-1.8"
 resolvers += "jw3 at bintray" at "https://dl.bintray.com/jw3/maven"
 
 libraryDependencies ++= {
-  val akkaVersion = "2.4.4"
-  val scalatestVersion = "3.0.0-M15"
+  val akkaVersion = "2.5.14"
+  val scalatestVersion = "3.0.3"
 
   Seq(
     "com.github.jw3" % "pigpio-jna" % "0.3",
@@ -22,8 +22,6 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
     "org.scalactic" %% "scalactic" % scalatestVersion % Test,
     "org.scalatest" %% "scalatest" % scalatestVersion % Test,
-    "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test"
+    "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % Test
   )
 }
-
-com.updateimpact.Plugin.apiKey in ThisBuild := sys.env.getOrElse("UPDATEIMPACT_API_KEY", (com.updateimpact.Plugin.apiKey in ThisBuild).value)
