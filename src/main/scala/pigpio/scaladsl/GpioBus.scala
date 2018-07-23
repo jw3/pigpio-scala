@@ -1,7 +1,6 @@
 package pigpio.scaladsl
 
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
-import pigpio.scaladsl.GpioPin.{Listen, Unlisten}
 
 import scala.collection.immutable.HashSet
 
@@ -16,10 +15,10 @@ class GpioBus() extends Actor with ActorLogging {
   var listeners = HashSet[ActorRef]()
 
   def receive: Receive = {
-    case Listen() =>
+    case GpioPin.Listen() =>
       listeners += sender()
 
-    case Unlisten() =>
+    case GpioPin.Unlisten() =>
       listeners -= sender()
 
     case a: GpioAlert =>

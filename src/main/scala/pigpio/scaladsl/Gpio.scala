@@ -1,8 +1,7 @@
 package pigpio.scaladsl
 
 import akka.actor.ActorRef
-import pigpio.scaladsl.PigpioLibrary.gpioAlertFunc_t
-import pigpio.scaladsl.{PigpioLibrary => lib}
+import org.bytedeco.javacpp.pigpio.gpioAlertFunc_t
 
 /**
  * GPIO
@@ -41,8 +40,8 @@ case class UserGpio private[scaladsl](value: Int) extends Gpio
 case class ExtGpio private[scaladsl](value: Int) extends Gpio
 
 object Gpio {
-  val userPins = Range(0, lib.PI_MAX_USER_GPIO)
-  val extPins = Range(0, lib.PI_MAX_GPIO)
+  val userPins = Range(0, pigpio.PI_MAX_USER_GPIO)
+  val extPins = Range(0, pigpio.PI_MAX_GPIO)
 
   // default behavior of Gpio is user-gpios
   def apply(num: Int): UserGpio = {
@@ -82,7 +81,7 @@ object GpioAlertFunc {
   val clear: GpioAlertFunc = null.asInstanceOf[GpioAlertFunc]
 }
 
-class GpioAlertFunc(ref: ActorRef) extends gpioAlertFunc_t {
+class GpioAlertFunc(ref: ActorRef) extends pigpio.gpioAlertFunc_t {
   def callback(gpio: Int, level: Int, tick: Int /*UINT32*/): Unit = {
     ref ! GpioAlert(gpio, level, tick)
   }

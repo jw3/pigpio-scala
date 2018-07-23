@@ -1,10 +1,8 @@
 package pigpio.scaladsl
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
-import pigpio.scaladsl.GpioPin.ListeningMessage
-import pigpio.scaladsl.PigpioLibrary.{INSTANCE => pigpio}
 
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 
 object GpioPin {
@@ -12,12 +10,12 @@ object GpioPin {
   case class Listen() extends ListeningMessage
   case class Unlisten() extends ListeningMessage
 
-  def apply(gpio: UserGpio)(implicit lgpio: PigpioLibrary, sys: ActorSystem) = sys.actorOf(props(gpio))
-  def props(gpio: UserGpio)(implicit lgpio: PigpioLibrary) = Props(new GpioPin(gpio))
+  def apply(gpio: UserGpio)(implicit  sys: ActorSystem) = sys.actorOf(props(gpio))
+  def props(gpio: UserGpio)  = Props(new GpioPin(gpio))
 }
 
 
-class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with ActorLogging {
+class GpioPin(gpio: UserGpio)  extends Actor with ActorLogging {
   log.debug("created [{}] actor", gpio)
   val alertbus = context.actorOf(GpioBus.props())
   val listener = new GpioAlertFunc(alertbus)
@@ -29,7 +27,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
       case InputPin => context.become(input)
       case OutputPin => context.become(output)
       case QueryPinMode => sender() ! ClearPin
-      case m: ListeningMessage => alertbus forward m
+      case m: GpioPin.ListeningMessage => alertbus forward m
     }
   }
 
@@ -40,7 +38,7 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
     {
       case QueryPinMode => sender() ! InputPin
       case ClearPin =>
-        pigpio.gpioSetAlertFunc(gpio.value, GpioAlertFunc.clear)
+        pigpio.gpioSetAlertFunc(gpio.value, null)
         context.become(off)
     }
   }

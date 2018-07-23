@@ -21,10 +21,8 @@ trait Initializer {
 }
 
 object DefaultInitializer extends Initializer {
-  private val pigpio = PigpioLibrary.INSTANCE
-
   def gpioInitialise(): Try[Init] = {
-    try Success(InitResult(pigpio.gpioInitialise()))
+    try Success(InitResult(pigpio.gpioInitialise))
     catch {
       case NonFatal(e) => Failure(e)
     }
