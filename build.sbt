@@ -13,7 +13,7 @@ libraryDependencies ++= {
   val scalatestVersion = "3.0.3"
 
   Seq(
-    "com.github.jw3" % "pigpio-jna" % "0.3",
+    "com.github.jw3" % "pigpio-jna" % "0.6",
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
 
     "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",

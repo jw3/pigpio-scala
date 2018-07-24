@@ -6,16 +6,18 @@ import com.sun.jna._
 import com.sun.jna.ptr.IntByReference
 import pigpio.javadsl._
 
-
 object PigpioLibrary {
 
   val JNA_LIBRARY_NAME: String = "pigpio"
 
-  lazy val JNA_NATIVE_LIB: NativeLibrary = NativeLibrary.getInstance(PigpioLibrary.JNA_LIBRARY_NAME)
+  lazy val JNA_NATIVE_LIB: NativeLibrary =
+    NativeLibrary.getInstance(PigpioLibrary.JNA_LIBRARY_NAME)
 
-  lazy val INSTANCE: PigpioLibrary = Native.loadLibrary(PigpioLibrary.JNA_LIBRARY_NAME, classOf[PigpioLibrary]).asInstanceOf[PigpioLibrary]
+  lazy val INSTANCE: PigpioLibrary = Native
+    .loadLibrary(PigpioLibrary.JNA_LIBRARY_NAME, classOf[PigpioLibrary])
+    .asInstanceOf[PigpioLibrary]
 
-  val PIGPIO_VERSION: Int = 52
+  val PIGPIO_VERSION: Int = 67
 
   val PI_INPFIFO: String = "/dev/pigpio"
 
@@ -34,6 +36,8 @@ object PigpioLibrary {
   val WAVE_FLAG_READ: Int = 1
 
   val WAVE_FLAG_TICK: Int = 2
+
+  val BSC_FIFO_SIZE: Int = 512
 
   val PI_MIN_GPIO: Int = 0
 
@@ -101,19 +105,25 @@ object PigpioLibrary {
 
   val PI_NOTIFY_SLOTS: Int = 32
 
-  val PI_NTFY_FLAGS_ALIVE: Int = 1 << 6
+  val PI_NTFY_FLAGS_EVENT: Int = 128
 
-  val PI_NTFY_FLAGS_WDOG: Int = 1 << 5
+  val PI_NTFY_FLAGS_ALIVE: Int = 64
+
+  val PI_NTFY_FLAGS_WDOG: Int = 32
 
   val PI_WAVE_BLOCKS: Int = 4
 
-  val PI_WAVE_MAX_PULSES: Int = 4 * 3000
+  val PI_WAVE_MAX_PULSES: Int = 12000
 
-  val PI_WAVE_MAX_CHARS: Int = 4 * 300
+  val PI_WAVE_MAX_CHARS: Int = 1200
 
   val PI_BB_I2C_MIN_BAUD: Int = 50
 
   val PI_BB_I2C_MAX_BAUD: Int = 500000
+
+  val PI_BB_SPI_MIN_BAUD: Int = 50
+
+  val PI_BB_SPI_MAX_BAUD: Int = 250000
 
   val PI_BB_SER_MIN_BAUD: Int = 50
 
@@ -139,7 +149,7 @@ object PigpioLibrary {
 
   val PI_MAX_WAVE_HALFSTOPBITS: Int = 8
 
-  val PI_WAVE_MAX_MICROS: Int = 30 * 60 * 1000000
+  val PI_WAVE_MAX_MICROS: Int = 1800000000
 
   val PI_MAX_WAVES: Int = 250
 
@@ -161,41 +171,41 @@ object PigpioLibrary {
 
   val PI_NO_TX_WAVE: Int = 9999
 
-  val PI_I2C_SLOTS: Int = 32
+  val PI_FILE_SLOTS: Int = 16
 
-  val PI_SPI_SLOTS: Int = 16
+  val PI_I2C_SLOTS: Int = 64
 
-  val PI_SER_SLOTS: Int = 8
+  val PI_SPI_SLOTS: Int = 32
 
-  val PI_NUM_I2C_BUS: Int = 2
+  val PI_SER_SLOTS: Int = 16
 
-  val PI_MAX_I2C_ADDR: Int = 0x7F
+  val PI_MAX_I2C_ADDR: Int = 127
 
   val PI_NUM_AUX_SPI_CHANNEL: Int = 3
 
   val PI_NUM_STD_SPI_CHANNEL: Int = 2
 
-  val PI_MAX_I2C_DEVICE_COUNT: Int = 1 << 16
+  val PI_MAX_I2C_DEVICE_COUNT: Int = 65536
 
-  val PI_MAX_SPI_DEVICE_COUNT: Int = 1 << 16
+  val PI_MAX_SPI_DEVICE_COUNT: Int = 65536
 
   val PI_I2C_RDRW_IOCTL_MAX_MSGS: Int = 42
 
-  val PI_I2C_M_WR: Int = 0x0000
+  val PI_I2C_M_WR: Int = 0
 
-  val PI_I2C_M_RD: Int = 0x0001
+  val PI_I2C_M_RD: Int = 1
 
-  val PI_I2C_M_TEN: Int = 0x0010
+  val PI_I2C_M_TEN: Int = 16
 
-  val PI_I2C_M_RECV_LEN: Int = 0x0400
+  val PI_I2C_M_RECV_LEN: Int = 1024
 
-  val PI_I2C_M_NO_RD_ACK: Int = 0x0800
+  val PI_I2C_M_NO_RD_ACK: Int = 2048
 
-  val PI_I2C_M_IGNORE_NAK: Int = 0x1000
+  val PI_I2C_M_IGNORE_NAK: Int = 4096
 
-  val PI_I2C_M_REV_DIR_ADDR: Int = 0x2000
+  val PI_I2C_M_REV_DIR_ADDR: Int = 8192
 
-  val PI_I2C_M_NOSTART: Int = 0x4000
+  val PI_I2C_M_NOSTART: Int = 16384
 
   val PI_I2C_END: Int = 0
 
@@ -216,6 +226,76 @@ object PigpioLibrary {
   val PI_I2C_READ: Int = 6
 
   val PI_I2C_WRITE: Int = 7
+
+  val BSC_DR: Int = 0
+
+  val BSC_RSR: Int = 1
+
+  val BSC_SLV: Int = 2
+
+  val BSC_CR: Int = 3
+
+  val BSC_FR: Int = 4
+
+  val BSC_IFLS: Int = 5
+
+  val BSC_IMSC: Int = 6
+
+  val BSC_RIS: Int = 7
+
+  val BSC_MIS: Int = 8
+
+  val BSC_ICR: Int = 9
+
+  val BSC_DMACR: Int = 10
+
+  val BSC_TDR: Int = 11
+
+  val BSC_GPUSTAT: Int = 12
+
+  val BSC_HCTRL: Int = 13
+
+  val BSC_DEBUG_I2C: Int = 14
+
+  val BSC_DEBUG_SPI: Int = 15
+
+  val BSC_CR_TESTFIFO: Int = 2048
+
+  val BSC_CR_RXE: Int = 512
+
+  val BSC_CR_TXE: Int = 256
+
+  val BSC_CR_BRK: Int = 128
+
+  val BSC_CR_CPOL: Int = 16
+
+  val BSC_CR_CPHA: Int = 8
+
+  val BSC_CR_I2C: Int = 4
+
+  val BSC_CR_SPI: Int = 2
+
+  val BSC_CR_EN: Int = 1
+
+  val BSC_FR_RXBUSY: Int = 32
+
+  val BSC_FR_TXFE: Int = 16
+
+  val BSC_FR_RXFF: Int = 8
+
+  val BSC_FR_TXFF: Int = 4
+
+  val BSC_FR_RXFE: Int = 2
+
+  val BSC_FR_TXBUSY: Int = 1
+
+  val BSC_SDA_MOSI: Int = 18
+
+  val BSC_SCL_SCLK: Int = 19
+
+  val BSC_MISO: Int = 20
+
+  val BSC_CE_N: Int = 21
 
   val PI_MAX_BUSY_DELAY: Int = 100
 
@@ -283,6 +363,8 @@ object PigpioLibrary {
 
   val PI_LOCALHOST_SOCK_IF: Int = 4
 
+  val PI_DISABLE_ALERT: Int = 8
+
   val PI_MEM_ALLOC_AUTO: Int = 0
 
   val PI_MEM_ALLOC_PAGEMAP: Int = 1
@@ -297,17 +379,55 @@ object PigpioLibrary {
 
   val PI_CFG_ALERT_FREQ: Int = 4
 
-  val PI_CFG_RT_PRIORITY: Int = 1 << 8
+  val PI_CFG_RT_PRIORITY: Int = 256
 
-  val PI_CFG_STATS: Int = 1 << 9
+  val PI_CFG_STATS: Int = 512
 
-  val PI_CFG_ILLEGAL_VAL: Int = 1 << 10
+  val PI_CFG_NOSIGHANDLER: Int = 1024
+
+  val PI_CFG_ILLEGAL_VAL: Int = 2048
 
   val RISING_EDGE: Int = 0
 
   val FALLING_EDGE: Int = 1
 
   val EITHER_EDGE: Int = 2
+
+  val PI_MAX_PAD: Int = 2
+
+  val PI_MIN_PAD_STRENGTH: Int = 1
+
+  val PI_MAX_PAD_STRENGTH: Int = 16
+
+  val PI_FILE_NONE: Int = 0
+
+  val PI_FILE_MIN: Int = 1
+
+  val PI_FILE_READ: Int = 1
+
+  val PI_FILE_WRITE: Int = 2
+
+  val PI_FILE_RW: Int = 3
+
+  val PI_FILE_APPEND: Int = 4
+
+  val PI_FILE_CREATE: Int = 8
+
+  val PI_FILE_TRUNC: Int = 16
+
+  val PI_FILE_MAX: Int = 31
+
+  val PI_FROM_START: Int = 0
+
+  val PI_FROM_CURRENT: Int = 1
+
+  val PI_FROM_END: Int = 2
+
+  val MAX_CONNECT_ADDRESSES: Int = 256
+
+  val PI_MAX_EVENT: Int = 31
+
+  val PI_EVENT_BSC: Int = 31
 
   val PI_CMD_MODES: Int = 0
 
@@ -513,6 +633,38 @@ object PigpioLibrary {
 
   val PI_CMD_WVTAT: Int = 101
 
+  val PI_CMD_PADS: Int = 102
+
+  val PI_CMD_PADG: Int = 103
+
+  val PI_CMD_FO: Int = 104
+
+  val PI_CMD_FC: Int = 105
+
+  val PI_CMD_FR: Int = 106
+
+  val PI_CMD_FW: Int = 107
+
+  val PI_CMD_FS: Int = 108
+
+  val PI_CMD_FL: Int = 109
+
+  val PI_CMD_SHELL: Int = 110
+
+  val PI_CMD_BSPIC: Int = 111
+
+  val PI_CMD_BSPIO: Int = 112
+
+  val PI_CMD_BSPIX: Int = 113
+
+  val PI_CMD_BSCX: Int = 114
+
+  val PI_CMD_EVM: Int = 115
+
+  val PI_CMD_EVT: Int = 116
+
+  val PI_CMD_PROCU: Int = 117
+
   val PI_CMD_SCRIPT: Int = 800
 
   val PI_CMD_ADD: Int = 800
@@ -598,6 +750,8 @@ object PigpioLibrary {
   val PI_CMD_XA: Int = 840
 
   val PI_CMD_XOR: Int = 841
+
+  val PI_CMD_EVTWT: Int = 842
 
   val PI_INIT_FAILED: Int = -1
 
@@ -727,6 +881,8 @@ object PigpioLibrary {
 
   val PI_NOT_HALTED: Int = -62
 
+  val PI_SCRIPT_NOT_READY: Int = -62
+
   val PI_BAD_TAG: Int = -63
 
   val PI_BAD_MICS_DELAY: Int = -64
@@ -853,6 +1009,44 @@ object PigpioLibrary {
 
   val PI_BAD_FILTER: Int = -125
 
+  val PI_BAD_PAD: Int = -126
+
+  val PI_BAD_STRENGTH: Int = -127
+
+  val PI_FIL_OPEN_FAILED: Int = -128
+
+  val PI_BAD_FILE_MODE: Int = -129
+
+  val PI_BAD_FILE_FLAG: Int = -130
+
+  val PI_BAD_FILE_READ: Int = -131
+
+  val PI_BAD_FILE_WRITE: Int = -132
+
+  val PI_FILE_NOT_ROPEN: Int = -133
+
+  val PI_FILE_NOT_WOPEN: Int = -134
+
+  val PI_BAD_FILE_SEEK: Int = -135
+
+  val PI_NO_FILE_MATCH: Int = -136
+
+  val PI_NO_FILE_ACCESS: Int = -137
+
+  val PI_FILE_IS_A_DIR: Int = -138
+
+  val PI_BAD_SHELL_STATUS: Int = -139
+
+  val PI_BAD_SCRIPT_NAME: Int = -140
+
+  val PI_BAD_SPI_BAUD: Int = -141
+
+  val PI_NOT_SPI_GPIO: Int = -142
+
+  val PI_BAD_EVENT_ID: Int = -143
+
+  val PI_CMD_INTERRUPTED: Int = -144
+
   val PI_PIGIF_ERR_0: Int = -2000
 
   val PI_PIGIF_ERR_99: Int = -2099
@@ -869,6 +1063,8 @@ object PigpioLibrary {
 
   val PI_DEFAULT_IF_FLAGS: Int = 0
 
+  val PI_DEFAULT_FOREGROUND: Int = 0
+
   val PI_DEFAULT_DMA_CHANNEL: Int = 14
 
   val PI_DEFAULT_DMA_PRIMARY_CHANNEL: Int = 14
@@ -881,21 +1077,21 @@ object PigpioLibrary {
 
   val PI_DEFAULT_SOCKET_ADDR_STR: String = "127.0.0.1"
 
-  val PI_DEFAULT_UPDATE_MASK_UNKNOWN: Long = 0xFFFFFFFFL
+  val PI_DEFAULT_UPDATE_MASK_UNKNOWN = 268435452L
 
-  val PI_DEFAULT_UPDATE_MASK_B1: Int = 0x03E7CF93
+  val PI_DEFAULT_UPDATE_MASK_B1: Int = 65523603
 
-  val PI_DEFAULT_UPDATE_MASK_A_B2: Int = 0xFBC7CF9C
+  val PI_DEFAULT_UPDATE_MASK_A_B2: Int = -70791268
 
-  val PI_DEFAULT_UPDATE_MASK_APLUS_BPLUS: Long = 0x0080480FFFFFFCL
+  val PI_DEFAULT_UPDATE_MASK_APLUS_BPLUS = 141046994436092L
 
-  val PI_DEFAULT_UPDATE_MASK_ZERO: Long = 0x0080000FFFFFFCL
+  val PI_DEFAULT_UPDATE_MASK_ZERO = 140737756790780L
 
-  val PI_DEFAULT_UPDATE_MASK_PI2B: Long = 0x0080480FFFFFFCL
+  val PI_DEFAULT_UPDATE_MASK_PI2B = 141046994436092L
 
-  val PI_DEFAULT_UPDATE_MASK_PI3B: Long = 0x0000000FFFFFFCL
+  val PI_DEFAULT_UPDATE_MASK_PI3B = 268435452L
 
-  val PI_DEFAULT_UPDATE_MASK_COMPUTE: Long = 0x00FFFFFFFFFFFFL
+  val PI_DEFAULT_UPDATE_MASK_COMPUTE = 281474976710655L
 
   val PI_DEFAULT_MEM_ALLOC_MODE: Int = 0
 
@@ -907,6 +1103,14 @@ object PigpioLibrary {
 
   trait gpioAlertFuncEx_t extends Callback {
     def callback(gpio: Int, level: Int, tick: Int, userdata: Pointer)
+  }
+
+  trait eventFunc_t extends Callback {
+    def callback(event: Int, tick: Int)
+  }
+
+  trait eventFuncEx_t extends Callback {
+    def callback(event: Int, tick: Int, userdata: Pointer)
   }
 
   trait gpioISRFunc_t extends Callback {
@@ -1221,6 +1425,44 @@ trait PigpioLibrary extends Library {
 
   def gpioVersion: Int
 
+  def gpioGetPad(var1: Int): Int
+
+  def gpioSetPad(var1: Int, var2: Int): Int
+
+  def eventMonitor(var1: Int, var2: Int): Int
+
+  def eventSetFunc(var1: Int, var2: PigpioLibrary.eventFunc_t): Int
+
+  def eventSetFuncEx(var1: Int,
+                     var2: PigpioLibrary.eventFuncEx_t,
+                     var3: Pointer): Int
+
+  def eventTrigger(var1: Int): Int
+
+  @deprecated def shell(var1: Pointer, var2: Pointer): Int
+
+  def shell(var1: ByteBuffer, var2: ByteBuffer): Int
+
+  @deprecated def fileOpen(var1: Pointer, var2: Int): Int
+
+  def fileOpen(var1: ByteBuffer, var2: Int): Int
+
+  def fileClose(var1: Int): Int
+
+  @deprecated def fileWrite(var1: Int, var2: Pointer, var3: Int): Int
+
+  def fileWrite(var1: Int, var2: ByteBuffer, var3: Int): Int
+
+  @deprecated def fileRead(var1: Int, var2: Pointer, var3: Int): Int
+
+  def fileRead(var1: Int, var2: ByteBuffer, var3: Int): Int
+
+  def fileSeek(var1: Int, var2: Int, var3: Int): Int
+
+  @deprecated def fileList(var1: Pointer, var2: Pointer, var3: Int): Int
+
+  def fileList(var1: ByteBuffer, var2: ByteBuffer, var3: Int): Int
+
   def gpioCfgBufferSize(cfgMillis: Int): Int
 
   def gpioCfgClock(cfgMicros: Int, cfgPeripheral: Int, cfgSource: Int): Int
@@ -1260,6 +1502,10 @@ trait PigpioLibrary extends Library {
   def rawWaveCB: Int
 
   def rawWaveCBAdr(cbNum: Int): rawCbs_t
+
+  def rawWaveGetOOL(var1: Int): Int
+
+  def rawWaveSetOOL(var1: Int, var2: Int): Unit
 
   def rawWaveGetOut(pos: Int): Int
 
