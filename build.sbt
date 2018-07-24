@@ -1,6 +1,8 @@
+enablePlugins(GitVersioning)
+
 organization := "com.github.jw3"
 name := "pigpio-scala"
-version := "0.1-SNAPSHOT"
+git.useGitDescribe := true
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 scalaVersion := "2.12.6"
@@ -16,7 +18,7 @@ libraryDependencies ++= {
     "com.github.jw3" % "pigpio-jna" % "0.6",
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
 
-    "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion % Runtime,
 
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
