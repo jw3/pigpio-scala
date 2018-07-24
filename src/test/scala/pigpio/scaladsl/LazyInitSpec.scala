@@ -8,9 +8,7 @@ class LazyInitSpec extends WordSpec with Matchers {
       PigpioLibrary.PI_OFF shouldBe 0
     }
     "load explicitly" in {
-      intercept[UnsatisfiedLinkError] {
-        PigpioLibrary.INSTANCE.gpioWaveTxStop
-      }
+      PigpioLibrary.INSTANCE.gpioWaveTxStop
     }
   }
 }
