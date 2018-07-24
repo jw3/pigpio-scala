@@ -3,7 +3,7 @@ name := "pigpio-scala"
 version := "0.1-SNAPSHOT"
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.6"
 scalacOptions += "-target:jvm-1.8"
 
 resolvers += "jw3 at bintray" at "https://dl.bintray.com/jw3/maven"
