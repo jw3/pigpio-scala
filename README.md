@@ -7,6 +7,13 @@ Scala API to the great pigpio library
  
 Using JNA bindings from [pigpio-jna](https://github.com/jw3/pigpio-jna)
 
+##### Tests
+
+Tests that require the pigpio library are tagged and can be excluded with
+
+`sbt "testOnly pigpio.scaladsl.* -- -l pigpio.scaladsl.PiIntegrationTest"`
+
+
 ##### Ticks
 
 Microsecond timestamps comes across as uint32 in
