@@ -27,3 +27,5 @@ libraryDependencies ++= {
     "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % Test
   )
 }
+
+com.updateimpact.Plugin.apiKey in ThisBuild := sys.env.getOrElse("UPDATEIMPACT_API_KEY", (com.updateimpact.Plugin.apiKey in ThisBuild).value)
