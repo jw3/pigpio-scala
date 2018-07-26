@@ -7,5 +7,6 @@ jdk:
   - oraclejdk8
 
 script:
-  - sbt "testOnly pigpio.scaladsl.* -- -l pigpio.scaladsl.PiIntegrationTest"
-  - if [ -z ${UPDATEIMPACT_API_KEY} ]; then sbt ++$TRAVIS_SCALA_VERSION updateImpactSubmit; fi
+- sbt "testOnly pigpio.scaladsl.* -- -l pigpio.scaladsl.PiIntegrationTest"
+- if [[ ! -z "$TRAVIS_TAG" ]]; then sbt ++$TRAVIS_SCALA_VERSION publish; fi
+- if [[ ! -z "$UPDATEIMPACT_API_KEY" ]]; then sbt ++$TRAVIS_SCALA_VERSION updateImpactSubmit; fi

@@ -3,12 +3,24 @@ enablePlugins(GitVersioning)
 organization := "com.github.jw3"
 name := "pigpio-scala"
 git.useGitDescribe := true
-licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+scalacOptions ++= Seq(
+  "-encoding", "UTF-8",
+
+  "-feature",
+  "-unchecked",
+  "-deprecation",
+
+  "-language:postfixOps",
+  "-language:implicitConversions",
+
+  "-Ywarn-unused-import",
+  //"-Xfatal-warnings",
+  "-Xlint:_"
+)
 
 scalaVersion := "2.12.6"
-scalacOptions += "-target:jvm-1.8"
-
-resolvers += "jw3 at bintray" at "https://dl.bintray.com/jw3/maven"
+resolvers += Resolver.bintrayRepo("jw3", "maven")
+licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 libraryDependencies ++= {
   val akkaVersion = "2.5.14"
