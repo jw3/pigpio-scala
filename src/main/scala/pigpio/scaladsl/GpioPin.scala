@@ -42,6 +42,14 @@ class GpioPin(gpio: UserGpio)(implicit lgpio: PigpioLibrary) extends Actor with 
       case ClearPin =>
         pigpio.gpioSetAlertFunc(gpio.value, GpioAlertFunc.clear)
         context.become(off)
+
+      case p: GpioPull =>
+        log.debug("[{}] pulling [{}]", gpio, p)
+        val src = sender()
+        DefaultDigitalIO.gpioSetPullUpDown(gpio, p) match {
+          case Success(r) => src ! r
+          case Failure(e) => throw e
+        }
     }
   }
 
