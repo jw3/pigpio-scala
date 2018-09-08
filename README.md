@@ -7,6 +7,8 @@ Scala API to the great pigpio library
  
 Using JNA bindings from [pigpio-jna](https://github.com/jw3/pigpio-jna)
 
+See some examples https://github.com/jw3/pigpio-scala-examples
+
 ##### Tests
 
 Tests that require the pigpio library are tagged and can be excluded with
