@@ -1,5 +1,7 @@
 package pigpio.scaladsl
 
+import org.bytedeco.javacpp.pigpio
+
 sealed trait PinMode {
   def value: Int
 }

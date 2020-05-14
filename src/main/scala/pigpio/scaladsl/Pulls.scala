@@ -1,5 +1,6 @@
 package pigpio.scaladsl
 
+import org.bytedeco.javacpp.pigpio
 
 sealed trait GpioPull {
   def value: Int

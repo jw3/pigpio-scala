@@ -1,7 +1,8 @@
 package pigpio.scaladsl
 
 import akka.actor.ActorRef
-import org.bytedeco.javacpp.pigpio.gpioAlertFunc_t
+import org.bytedeco.javacpp.pigpio
+
 
 /**
  * GPIO

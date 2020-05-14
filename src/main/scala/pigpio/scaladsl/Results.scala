@@ -1,5 +1,7 @@
 package pigpio.scaladsl
 
+import org.bytedeco.javacpp.pigpio
+
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 

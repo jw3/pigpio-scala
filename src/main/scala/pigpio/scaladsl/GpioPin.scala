@@ -1,6 +1,7 @@
 package pigpio.scaladsl
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
+import org.bytedeco.javacpp.pigpio
 
 import scala.util.{Failure, Success}
 
